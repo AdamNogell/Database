@@ -1,7 +1,21 @@
 #! /home/adam/Desktop/PhD/Database/venv/bin/python
 
-list = ["Iran_GanjDareh_N"]
+import pyperclip
+
+list = ["4500-3500 BCE"]
+    
+year = []
 
 for item in list:
-    if item.endswith('_N') or '_N_' in item or '_N.' in item or '_LN' in item or '_MN' in item or '_PN' in item or 'Ceramic' in item or 'LIP' in item or 'MH' in item or 'EIP' in item:
-        print("Neolithic")
+        index = item.find('CE')
+        if index != -1:
+            cropped_item = item[:(index+2)]
+            year.append(cropped_item)
+        else:
+            year.append(item)
+                
+for item in year:
+    years = item.split('-')
+    year1 = years[0]
+    year2 = years[1].strip(' BCE')
+print(f"years = {years}\nyear1 = {year1}\nyear2 = {year2}")

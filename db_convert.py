@@ -51,6 +51,11 @@ def epoch_extract(df):
             epoch.append("Modern Era")
     return epoch
 
+def parse_years(df):
+    column_10 = df.iloc[:, 9]
+    for item in column_10:
+        index = item.find('CE')
+
 def reorganize_csv(df, output_file, continent, epoch):   
     reorganized_df = pd.DataFrame({
         "identifier": df.iloc[:, 1],
