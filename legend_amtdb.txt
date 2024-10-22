@@ -1,0 +1,37 @@
+AmtDB:
+1) "identifier" - "I5373"
+2) "alternative_identifiers" - "none"
+3) "country" - "Great Britain"
+4) "continent" - "Europe"
+5) "region" - "British Isles"
+6) "culture" - "England_CA_EBA"
+7) "epoch" - "Bronze Age"
+8) "group" - "BABI"
+9) "comment" - ""
+10) "latitude" - 53.079803466796875
+11) "longitude" - -1.6409419775009155
+12) "sex" - "M"
+13) "site" - "Carsington Pasture Cave, Brassington, Derbyshire, England"
+14) "site_detail" - ""
+15) "mt_hg" - "X2b+226"
+16) "ychr_hg" - "R1b1a1a2a1a"
+17) "year_from" - -2194 
+18) "year_to" - -1980
+19) "date_detail" "2194-1980 calBCE (3694±25 BP, BRAMS-1230)"
+20) "bp" - "3694±25"
+21) "c14_lab_code" - "BRAMS-1230"
+22) "reference_name" - "Olalde et al. 2018"
+23) "reference_link" - "https://dx.doi.org/10.1038/nature25738"
+24) "data_link" - "http://www.ebi.ac.uk/ena/data/view/PRJEB23635"
+25) "c14_sample_tag" - "1"
+26) "c14_layer_tag" - "0"
+27) "ychr_snps" - ""
+28) "avg_coverage" - 214.55099487304688
+29) "sequence_source" - bam
+30) "mitopatho_alleles" - "11251G;15928A;4917G;4216C"
+31) "mitopatho_positions" - "11251;15928;4917;4216"
+32) "mitopatho_locus" - "MT-ND4;MT-TT;MT-ND2;MT-ND1"
+33) "mitopatho_diseases" - "Reduced risk of PD;Multiple Sclerosis / idiopathic repeat miscarriage / AD protection;LHON / Insulin Resistance / AMD / NRTI-PN;LHON / Insulin Resistance /possible adaptive high altitude variant / miscarriage"
+34) "mitopatho_statuses" - "Reported;Reported;Reported;Conflicting reports"
+35) "mitopatho_homoplasms" - "nr;+;+;+"
+36) "mitopatho_heteroplasms" - "nr;-;-;-"
