@@ -1,8 +1,17 @@
 #! /home/adam/Desktop/PhD/Database/venv/bin/python
 
 import pandas as pd
+import re, requests, urllib.parse, time
+from bs4 import BeautifulSoup
+
+start_time = time.time()
 
 def continent_extract(df, input_dict):
+    
+    '''
+    Extract continent from column 14 of the data frame according to the country in the column.
+    '''
+    
     column_14 = df.iloc[:, 13]
 
     continent = []
@@ -26,6 +35,11 @@ def continent_extract(df, input_dict):
     return continent
 
 def epoch_extract(df):
+    
+    '''
+    Extract archaeological epochs from column 12 of the data frame.
+    '''
+    
     column_12 = df.iloc[:, 11]
 
     epoch = []
@@ -49,14 +63,103 @@ def epoch_extract(df):
             epoch.append("Middle Age")
         elif ('Modern' in item):
             epoch.append("Modern Era")
+        else:
+            epoch.append('none')
     return epoch
 
 def parse_years(df):
+    
+    '''
+    Extract year range from column 10 of the data frame.
+    '''
+    
     column_10 = df.iloc[:, 9]
+    
+    year_start = []
+    year_end = []
+    bp = []
+    c14 = []
+    
     for item in column_10:
-        index = item.find('CE')
+        match1 = re.match(r'"*(\d+)\s+(\w+)\s*-\s*(\d+)\s+(\w+)', item)
+        match2 = re.match(r'"*(\d+)-(\d+)\s+(\w+)', item)
+        if match1:
+            number1, string1, number2, string2 = match1.groups()
+            year1 = f"{number1} {string1}"
+            year2 = f"{number2} {string2}"
+        elif match2:
+            number1, number2, string1 = match2.groups()
+            year1 = f"{number1} {string1}"
+            year2 = f"{number2} {string1}"
+        else:
+            year1 = item
+            year2 = item
+        year_start.append(year1)
+        year_end.append(year2)
+        
+    for item in column_10:
+        try:
+            if '(' in item:
+                extract = item.split("(")
+                extract[-1] = extract[-1].strip('")]')
+                if ',' in extract[-1]:
+                    bp.append(extract[-1].split(',')[0])
+                    c14.append(extract[-1].split(',')[1].strip(" "))
+                else:
+                    bp.append(extract[-1].split('BP')[0]+'BP')
+                    c14.append(extract[-1].split('BP')[1].strip(" "))
+            else:
+                bp.append('none')
+                c14.append('none')
+        except: 
+            bp.append('none')
+            c14.append('none')
+            
+    return year_start, year_end, bp, c14
 
-def reorganize_csv(df, output_file, continent, epoch):   
+def pub_url(df):
+    
+    '''
+    Insert spaces in the publication data from column 6 of the data frame and use it to retrieve URL of the publication according to Google Scholar.
+    '''
+    
+    column_6 = df.iloc[:, 5]
+    
+    publications = []
+    urls = []
+    
+    for item in column_6:
+        spaced_pub = re.sub(r'([A-Z])', r' \1', item).strip()
+        spaced_pub = spaced_pub.replace('2', ' 2', 1)
+        publications.append(spaced_pub)
+        query = urllib.parse.quote_plus(spaced_pub)
+        url = f"https://scholar.google.com/scholar?q={query}"
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
+        }
+        response = requests.get(url, headers=headers)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.text, 'html.parser')
+            first_result = soup.find('h3', class_='gs_rt')
+            if first_result:
+                link = first_result.find('a')
+                if link and 'href' in link.attrs:
+                    paper_url = link['href']
+                    urls.append(paper_url)
+                else:
+                    urls.append('none')
+            else:
+                urls.append('none')
+        else:
+            urls.append('none')
+    return publications, urls
+
+def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, urls):   
+    
+    '''
+    Reorganize CSV file in the AADR format into a CSV file in the AmtDB format.
+    '''
+    
     reorganized_df = pd.DataFrame({
         "identifier": df.iloc[:, 1],
         "alternative_identifiers": 'none',
@@ -74,26 +177,26 @@ def reorganize_csv(df, output_file, continent, epoch):
         "site_detail": "none",
         "mt_hg": df.iloc[:, 27],
         "ychr_hg": df.iloc[:, 25],
-        "year_from": "",
-        "year_to": "",
-        "date_detail": "",
-        "bp": "",
-        "c14_lab_code": "",
-        "reference_name": "",
-        "reference_link": "",
-        "data_link": "",
-        "c14_sample_tag": "",
-        "c14_layer_tag": "",
-        "ychr_snps": "",
-        "avg_coverage": "",
-        "sequence_source": "",
-        "mitopatho_alleles": "",
-        "mitopatho_positions": "",
-        "mitopatho_locus": "",
-        "mitopatho_diseases": "",
-        "mitopatho_statuses": "",
-        "mitopatho_homoplasms": "",
-        "mitopatho_heteroplasms": "",
+        "year_from": year_start,
+        "year_to": year_end,
+        "date_detail": df.iloc[:, 9],
+        "bp": bp,
+        "c14_lab_code": c14,
+        "reference_name": publications,
+        "reference_link": urls,
+        "data_link": 'none',
+        "c14_sample_tag": 'none',
+        "c14_layer_tag": 'none',
+        "ychr_snps": 'none',
+        "avg_coverage": df.iloc[:, 19],
+        "sequence_source": df.iloc[:,17],
+        "mitopatho_alleles": 'none',
+        "mitopatho_positions": 'none',
+        "mitopatho_locus": 'none',
+        "mitopatho_diseases": 'none',
+        "mitopatho_statuses": 'none',
+        "mitopatho_homoplasms": 'none',
+        "mitopatho_heteroplasms": 'none',
     })
     
     reorganized_df.to_csv(output_file, index=False) 
@@ -113,4 +216,10 @@ if __name__ == "__main__":
 
     continent = continent_extract(df, input_dict)
     epoch = epoch_extract(df)
-    reorganize_csv(df, output_file, continent, epoch)
+    year_start, year_end, bp, c14 = parse_years(df)
+    publications, urls = pub_url(df)
+    reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, urls)
+    
+    end_time = time.time()
+    run_time = end_time - start_time
+    print(f"Run time: {run_time:.2f} seconds")
