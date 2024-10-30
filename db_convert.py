@@ -103,11 +103,14 @@ def parse_years(df):
                 extract = item.split("(")
                 extract[-1] = extract[-1].strip('")]')
                 if ',' in extract[-1]:
-                    bp.append(extract[-1].split(',')[0])
-                    c14.append(extract[-1].split(',')[1].strip(" "))
+                    bp_value, c14_value = extract[-1].split(',')
+                    bp.append(bp_value.strip())
+                    c14.append(c14_value.strip())
                 else:
-                    bp.append(extract[-1].split('BP')[0]+'BP')
-                    c14.append(extract[-1].split('BP')[1].strip(" "))
+                    bp_value = extract[-1].split('BP')[0] + 'BP'
+                    c14_value = extract[-1].split('BP')[1].strip()
+                    bp.append(bp_value)
+                    c14.append(c14_value)
             else:
                 bp.append('none')
                 c14.append('none')
@@ -218,8 +221,35 @@ if __name__ == "__main__":
     epoch = epoch_extract(df)
     year_start, year_end, bp, c14 = parse_years(df)
     publications, urls = pub_url(df)
-    reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, urls)
+    try:
+        reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, urls)
+    except:
+        print("Something failed")
+        end_time = time.time()
+        run_time = end_time - start_time
+        print(f"Run time: {run_time:.2f} seconds")
+        print("continent:", len(continent))
+        print("epoch:", len(epoch))
+        print("year_start:", len(year_start))
+        print("year_end:", len(year_end))
+        print("bp:", len(bp))
+        print("c14_lab_code:", len(c14))
+        print("publications:", len(publications))
+        print("urls:", len(urls))
+        print("identifier:", len(df.iloc[:, 1]))
+        print("country:", len(df.iloc[:, 13]))
+        print("region:", len(df.iloc[:, 12]))
+        print("culture:", len(df.iloc[:, 11]))
+        print("latitude:", len(df.iloc[:, 14]))
+        print("longitude:", len(df.iloc[:, 15]))
+        print("sex:", len(df.iloc[:, 22]))
+        print("site:", len(df.iloc[:, 11]))
+        print("mt_hg:", len(df.iloc[:, 27]))
+        print("ychr_hg:", len(df.iloc[:, 25]))
+        print("date_detail:", len(df.iloc[:, 9]))
+        print("avg_coverage:", len(df.iloc[:, 19]))
+        print("sequence_source:", len(df.iloc[:,17]))
     
-    end_time = time.time()
-    run_time = end_time - start_time
-    print(f"Run time: {run_time:.2f} seconds")
+end_time = time.time()
+run_time = end_time - start_time
+print(f"Run time: {run_time:.2f} seconds")
