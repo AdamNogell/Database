@@ -1,0 +1,4 @@
+LINADMIX - ADMIXTURE output analysed (https://pmc.ncbi.nlm.nih.gov/articles/PMC10212583/)
+ADMIXTOOLS
+sequenceTOOLS (https://github.com/stschiff/sequenceTools) from https://www.nature.com/articles/ncomms10408#Sec8
+rarecoal - from the same article (https://github.com/stschiff/rarecoal)
