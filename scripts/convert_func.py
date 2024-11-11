@@ -5,13 +5,21 @@ import re, requests, urllib.parse
 from bs4 import BeautifulSoup
 
 class convert:
-    def continent_extract(df, input_dict):
+    def continent_extract(df):
 
         '''
         Extract continent from column 14 of the data frame according to the country in the column.
         '''
 
         column_14 = df.iloc[:, 13]
+        input_dict = {
+        "Africa": ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde","Cameroon", "CAR", "Central African Republic", "Chad", "Comoros", "Congo", "Democratic Republic of the Congo", "Djibouti", "DRC", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Ivory Coast", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Republic of the Congo", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
+        "Asia": ["Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan", "Brunei", "Cambodia", "China", "Cyprus", "Georgia", "India", "Indonesia", "Iran", "Iraq", "Israel", "Japan", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Malaysia", "Maldives", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Palestine", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "South Korea", "Sri Lanka", "Syria", "Taiwan", "Tajikistan", "Thailand", "Timor-Leste", "Turkey", "Turkmenistan", "United Arab Emirates", "UAE", "Uzbekistan", "Vietnam", "Yemen"],
+        "Europe": ["Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Kazakhstan", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco", "Montenegro", "Netherlands", "North Macedonia", "Macedonia", "Norway", "Poland", "Portugal", "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom", "UK", "England", "Scotland", "Northern Ireland", "Vatican City", "Vatican"],
+        "North America": ["Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Canada", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago", "United States", "United States of America", "USA", "US"],
+        "South America": ["Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"],
+        "Oceania": ["Australia", "Fiji", "Kiribati", "Marshall Islands", "Micronesia", "Nauru", "New Zealand", "Palau", "Papua New Guinea", "Samoa", "Solomon Islands", "Tonga", "Tuvalu", "Vanuatu"]
+        }
 
         continent = []
 
@@ -122,7 +130,7 @@ class convert:
     def pub_url(df):
 
         '''
-        Insert spaces in the publication data from column 6 of the data frame and use it to retrieve URL of the publication according to Google Scholar.
+        Insert spaces in the publication data from column 6 of the data frame and use it to retrieve URL of the publication according to Google Scholar (URL retrieval currently paused).
         '''
 
         column_6 = df.iloc[:, 5]
@@ -134,26 +142,27 @@ class convert:
             spaced_pub = re.sub(r'([A-Z])', r' \1', item).strip()
             spaced_pub = spaced_pub.replace('2', ' 2', 1)
             publications.append(spaced_pub)
-            query = urllib.parse.quote_plus(spaced_pub)
-            url = f"https://scholar.google.com/scholar?q={query}"
-            headers = {
-                "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
-            }
-            response = requests.get(url, headers=headers)
-            if response.status_code == 200:
-                soup = BeautifulSoup(response.text, 'html.parser')
-                first_result = soup.find('h3', class_='gs_rt')
-                if first_result:
-                    link = first_result.find('a')
-                    if link and 'href' in link.attrs:
-                        paper_url = link['href']
-                        urls.append(paper_url)
-                    else:
-                        urls.append('none')
-                else:
-                    urls.append('none')
-            else:
-                urls.append('none')
+            #query = urllib.parse.quote_plus(spaced_pub)
+            #url = f"https://scholar.google.com/scholar?q={query}"
+            #headers = {
+            #    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
+            #}
+            #response = requests.get(url, headers=headers)
+            #if response.status_code == 200:
+            #    soup = BeautifulSoup(response.text, 'html.parser')
+            #    first_result = soup.find('h3', class_='gs_rt')
+            #    if first_result:
+            #        link = first_result.find('a')
+            #        if link and 'href' in link.attrs:
+            #            paper_url = link['href']
+            #            urls.append(paper_url)
+            #        else:
+            #            urls.append('none')
+            #    else:
+            #        urls.append('none')
+            #else:
+            #    urls.append('none')
+            urls.append('TBA')
         return publications, urls
 
     def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, urls):   
@@ -163,11 +172,11 @@ class convert:
         '''
 
         reorganized_df = pd.DataFrame({
-            "identifier": df.iloc[:, 1],
-            "alternative_identifiers": 'none',
+            "id": df.iloc[:, 1],
+            "id_alt": 'none',
             "country": df.iloc[:, 13],
             "continent": continent,
-            "region": df.iloc[:, 12],
+            "geo_group": df.iloc[:, 12],
             "culture": df.iloc[:, 11],
             "epoch": epoch,
             "group": 'none',
@@ -176,9 +185,10 @@ class convert:
             "longitude": df.iloc[:, 15],
             "sex": df.iloc[:, 22],
             "site": df.iloc[:, 11],
-            "site_detail": "none",
+            "site_detail": 'none',
             "mt_hg": df.iloc[:, 27],
             "ychr_hg": df.iloc[:, 25],
+            "ychr_snps":'none',
             "year_from": year_start,
             "year_to": year_end,
             "date_detail": df.iloc[:, 9],
@@ -189,16 +199,19 @@ class convert:
             "data_link": 'none',
             "c14_sample_tag": 'none',
             "c14_layer_tag": 'none',
-            "ychr_snps": 'none',
+            "full_mt_tag":'none',
+            "trusted_tag":'none',
             "avg_coverage": df.iloc[:, 19],
-            "sequence_source": df.iloc[:,17],
-            "mitopatho_alleles": 'none',
-            "mitopatho_positions": 'none',
-            "mitopatho_locus": 'none',
-            "mitopatho_diseases": 'none',
-            "mitopatho_statuses": 'none',
-            "mitopatho_homoplasms": 'none',
-            "mitopatho_heteroplasms": 'none',
+            "amtdb_version": 'v1.010',
+            #"avg_coverage": df.iloc[:, 19],
+            #"sequence_source": df.iloc[:,17],
+            #"mitopatho_alleles": 'none',
+            #"mitopatho_positions": 'none',
+            #"mitopatho_locus": 'none',
+            #"mitopatho_diseases": 'none',
+            #"mitopatho_statuses": 'none',
+            #"mitopatho_homoplasms": 'none',
+            #"mitopatho_heteroplasms": 'none',
         })
 
         reorganized_df.to_csv(output_file, index=False) 
