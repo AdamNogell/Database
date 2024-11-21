@@ -137,11 +137,12 @@ class convert:
 
         publications = []
         urls = []
-
+        
         for item in column_6:
-            spaced_pub = re.sub(r'([A-Z])', r' \1', item).strip()
-            spaced_pub = spaced_pub.replace('2', ' 2', 1)
-            publications.append(spaced_pub)
+            spaced_pub = re.sub(r'([A-Z])', r' \1', item).strip().replace('2', ' 2', 1)
+            short_pub, year_pub = spaced_pub.split(' ', 1)[0], spaced_pub.split(' ')[-1]
+            pub = f"{short_pub} et al. {year_pub}" 
+            publications.append(pub)
             #query = urllib.parse.quote_plus(spaced_pub)
             #url = f"https://scholar.google.com/scholar?q={query}"
             #headers = {
@@ -162,10 +163,10 @@ class convert:
             #        urls.append('none')
             #else:
             #    urls.append('none')
-            urls.append('TBA')
-        return publications, urls
+            #urls.append('TBA')
+        return publications
 
-    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, urls):   
+    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url):   
 
         '''
         Reorganize CSV file in the AADR format into a CSV file in the AmtDB format.
@@ -173,45 +174,36 @@ class convert:
 
         reorganized_df = pd.DataFrame({
             "id": df.iloc[:, 1],
-            "id_alt": 'none',
+            "id_alt": '',
             "country": df.iloc[:, 13],
             "continent": continent,
             "geo_group": df.iloc[:, 12],
             "culture": df.iloc[:, 11],
             "epoch": epoch,
-            "group": 'none',
-            "comment": 'none',
+            "group": '',
+            "comment": '',
             "latitude": df.iloc[:, 14],
             "longitude": df.iloc[:, 15],
             "sex": df.iloc[:, 22],
             "site": df.iloc[:, 11],
-            "site_detail": 'none',
+            "site_detail": '',
             "mt_hg": df.iloc[:, 27],
             "ychr_hg": df.iloc[:, 25],
-            "ychr_snps":'none',
+            "ychr_snps":'',
             "year_from": year_start,
             "year_to": year_end,
             "date_detail": df.iloc[:, 9],
             "bp": bp,
             "c14_lab_code": c14,
             "reference_name": publications,
-            "reference_link": urls,
-            "data_link": 'none',
-            "c14_sample_tag": 'none',
-            "c14_layer_tag": 'none',
-            "full_mt_tag":'none',
-            "trusted_tag":'none',
+            "reference_link": reference_url,
+            "data_link": data_url,
+            "c14_sample_tag": '',
+            "c14_layer_tag": '',
+            "full_mt_tag":'',
+            "trusted_tag":'',
             "avg_coverage": df.iloc[:, 19],
-            "amtdb_version": 'v1.010',
-            #"avg_coverage": df.iloc[:, 19],
-            #"sequence_source": df.iloc[:,17],
-            #"mitopatho_alleles": 'none',
-            #"mitopatho_positions": 'none',
-            #"mitopatho_locus": 'none',
-            #"mitopatho_diseases": 'none',
-            #"mitopatho_statuses": 'none',
-            #"mitopatho_homoplasms": 'none',
-            #"mitopatho_heteroplasms": 'none',
+            "amtdb_version": 'v1.010'
         })
 
-        reorganized_df.to_csv(output_file, index=False) 
+        reorganized_df.to_csv(output_file, sep=';', index=False) 

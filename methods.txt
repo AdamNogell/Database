@@ -2,3 +2,35 @@ LINADMIX - ADMIXTURE output analysed (https://pmc.ncbi.nlm.nih.gov/articles/PMC1
 ADMIXTOOLS
 sequenceTOOLS (https://github.com/stschiff/sequenceTools) from https://www.nature.com/articles/ncomms10408#Sec8
 rarecoal - from the same article (https://github.com/stschiff/rarecoal)
+
+  1: id - NOT
+  2: id_alt - NOT
+  3: country - NOT
+  4: continent - NOT
+  5: geo_group - TBC
+  6: culture - TBC
+  7: epoch - TBC
+  8: group - TBC
+  9: comment - use this in case of need
+ 10: latitude - NOT
+ 11: longitude - NOT
+ 12: sex - NOT
+ 13: site - NOT(?)
+ 14: site_detail - NOT
+ 15: mt_hg - NOT
+ 16: ychr_hg - NOT
+ 17: ychr_snps - NOT
+ 18: year_from - TBC
+ 19: year_to - TBC
+ 20: date_detail - TBC
+ 21: bp - TBC
+ 22: c14_lab_code - TBC
+ 23: reference_name - DONE
+ 24: reference_link - NOT
+ 25: data_link - NOT
+ 26: c14_sample_tag - NOT
+ 27: c14_layer_tag - NOT
+ 28: full_mt_tag - NOT
+ 29: trusted_tag - NOT
+ 30: avg_coverage - NOT
+ 31: amtdb_version - NOT
