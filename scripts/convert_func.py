@@ -12,16 +12,17 @@ class convert:
         '''
 
         column_14 = df.iloc[:, 13]
+        continent = []
+        geo_group = []
+        
         input_dict = {
         "Africa": ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde","Cameroon", "CAR", "Central African Republic", "Chad", "Comoros", "Congo", "Democratic Republic of the Congo", "Djibouti", "DRC", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Ivory Coast", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Republic of the Congo", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
         "Asia": ["Afghanistan", "Armenia", "Azerbaijan", "Bahrain", "Bangladesh", "Bhutan", "Brunei", "Cambodia", "China", "Cyprus", "Georgia", "India", "Indonesia", "Iran", "Iraq", "Israel", "Japan", "Jordan", "Kazakhstan", "Kuwait", "Kyrgyzstan", "Laos", "Lebanon", "Malaysia", "Maldives", "Mongolia", "Myanmar", "Nepal", "North Korea", "Oman", "Pakistan", "Palestine", "Philippines", "Qatar", "Saudi Arabia", "Singapore", "South Korea", "Sri Lanka", "Syria", "Taiwan", "Tajikistan", "Thailand", "Timor-Leste", "Turkey", "Turkmenistan", "United Arab Emirates", "UAE", "Uzbekistan", "Vietnam", "Yemen"],
-        "Europe": ["Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Italy", "Kazakhstan", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco", "Montenegro", "Netherlands", "North Macedonia", "Macedonia", "Norway", "Poland", "Portugal", "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom", "UK", "England", "Scotland", "Northern Ireland", "Vatican City", "Vatican"],
-        "North America": ["Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Canada", "Costa Rica", "Cuba", "Dominica", "Dominican Republic", "El Salvador", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago", "United States", "United States of America", "USA", "US"],
+        "Europe": ["Albania", "Andorra", "Austria", "Belarus", "Belgium", "Bosnia and Herzegovina", "Bulgaria", "Channel Islands", "Croatia", "Cyprus", "Czech Republic", "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Iceland", "Ireland", "Isle of Man" "Italy", "Kazakhstan", "Kosovo", "Latvia", "Liechtenstein", "Lithuania", "Luxembourg", "Malta", "Moldova", "Monaco", "Montenegro", "Netherlands", "North Macedonia", "Macedonia", "Norway", "Poland", "Portugal", "Romania", "Russia", "San Marino", "Serbia", "Slovakia", "Slovenia", "Spain", "Sweden", "Switzerland", "Ukraine", "United Kingdom", "UK", "England", "Scotland", "Northern Ireland", "Vatican City", "Vatican"],
+        "North America": ["Antigua and Barbuda", "Bahamas", "Barbados", "Belize", "Canada", "Costa Rica", "Cuba", "Curacao" "Dominica", "Dominican Republic", "El Salvador", "Grenada", "Guatemala", "Haiti", "Honduras", "Jamaica", "Mexico", "Nicaragua", "Panama", "Puerto Rico", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Trinidad and Tobago", "United States", "United States of America", "USA", "US"],
         "South America": ["Argentina", "Bolivia", "Brazil", "Chile", "Colombia", "Ecuador", "Guyana", "Paraguay", "Peru", "Suriname", "Uruguay", "Venezuela"],
-        "Oceania": ["Australia", "Fiji", "Kiribati", "Marshall Islands", "Micronesia", "Nauru", "New Zealand", "Palau", "Papua New Guinea", "Samoa", "Solomon Islands", "Tonga", "Tuvalu", "Vanuatu"]
+        "Oceania": ["Australia", "Federated States of Micronesia", "Fiji", "Guam" "Kiribati", "Marshall Islands", "Micronesia", "Nauru", "New Zealand", "Palau", "Papua New Guinea", "Samoa", "Solomon Islands", "Tonga", "Tuvalu", "Vanuatu"]
         }
-
-        continent = []
 
         for item in column_14:
             if item in input_dict["Africa"]:
@@ -39,8 +40,54 @@ class convert:
             else:
                 continent.append(item)
 
-        return continent
+        for item in column_14:
+            if 'Turkey' in item:
+                geo_group.append("Anatolia")
+            elif 'United Kingdom' in item or 'Channel Islands' in item or 'Isle of Man' in item or 'Ireland' in item:
+                geo_group.append("British Isles")
+            elif 'Bahamas' in item or 'Belize' in item or 'Dominican Republic' in item or 'Curacao' in item or 'Haiti' in item or 'Puerto Rico' in item:
+                geo_group.append("Caribbean")
+            elif 'Guam' in item or 'Micronesia' in item or 'Vanuatu' in item:
+                geo_group.append("Oceania")
+            elif 'Spain' in item or 'Portugal' in item:
+                geo_group.append("Iberia")
+            elif 'Armenia' in item or 'Azerbaijan' in item or 'Georgia' in item:
+                geo_group.append("Caucasus")
+            elif 'Albania' in item or 'Bulgaria' in item or 'Bosnia' in item or 'Serbia' in item or 'Montenegro' in item or 'Kosovo' in item or 'Macedonia' in item or 'Greece' in item or 'Croatia' in item or 'Slovenia' in item or 'Romania' in item:
+                geo_group.append("Balkans")
+            elif 'Estonia' in item or 'Lithuania' in item or 'Latvia' in item:
+                geo_group.append("Baltic")
+            elif 'Egypt' in item or 'Israel' in item or 'Iraq' in item or 'Jordan' in item or 'Palestine' in item or 'Syria' in item or 'Saudi Arabia' in item or 'Qatar' in item or 'Bahrain' in item or 'Kuwait' in item or 'UAE' in item or 'Emirates' in item or 'Oman' in item or 'Yemen' in item or 'Lebanon' in item:
+                geo_group.append("Near East")
+            elif 'Iran' in item or 'Afghanistan' in item or 'Pakistan' in item:
+                geo_group.append("Middle East")
+            elif 'Norway' in item or 'Sweden' in item or 'Denmark' in item or 'Finland' in item or 'Iceland' in item:
+                geo_group.append("Scandinavia")
+            elif 'Moldova' in item or 'Ukraine' in item:
+                geo_group.append("Pontic steppe")
+            elif 'Austria' in item or 'Czech' in item or 'Slovak' in item or 'Germany' in item or 'Switzerland' in item or 'Hungary' in item or 'Poland' in item or 'Liechtenstein' in item:
+                geo_group.append("central Europe")
+            elif 'France' in item or 'Netherlands' in item or 'Belgium' in item or 'Luxembourg' in item:
+                geo_group.append("western Europe")
+            elif 'Italy' in item:
+                geo_group.append("southern Europe")
+            elif 'Sudan' in item or 'Ethiopia' in item or 'Kenya' in item or 'Malawi' in item or 'Zambia' in item or 'Tanzania' in item:
+                geo_group.append("eastern Africa")
+            elif 'Japan' in item or 'China' in item or 'Taiwan' in item or 'Mongolia' in item or 'Myanmar' in item or 'Thailand' in item or 'Vietnam' in item:
+                geo_group.append("east Asia")
+            elif 'Uzbekistan' in item or 'Tajikistan' in item or 'Turkmenistan' in item or 'Kyrgyzstan' in item or 'Kazakhstan' in item:
+                geo_group.append("central Asia")
+            elif 'Bolivia' in item or 'Mexico' in item or 'Brazil' in item or 'Peru' in item or 'Chile' in item or 'Uruguay' in item or 'Paraguay' in item or 'Suriname' in item or 'Guyana' in item or 'Venezuela' in item or 'Ecuador' in item or 'Colombia' in item or 'Honduras' in item or 'Nicaragua' in item or 'El Salvador' in item or 'Guatemala' in item:
+                geo_group.append("Latin America")
+            elif 'Cameroon' in item:
+                geo_group.append("central Africa")
+            elif 'South Africa' in item:
+                geo_group.append("south Africa")
+            else:
+                geo_group.append(item)
 
+        return continent, geo_group
+    
     def epoch_extract(df):
 
         '''
@@ -48,7 +95,6 @@ class convert:
         '''
 
         column_12 = df.iloc[:, 11]
-
         epoch = []
 
         for item in column_12:
@@ -71,7 +117,7 @@ class convert:
             elif ('Modern' in item):
                 epoch.append("Modern Era")
             else:
-                epoch.append('none')
+                epoch.append('')
         return epoch
 
     def parse_years(df):
@@ -81,7 +127,6 @@ class convert:
         '''
 
         column_10 = df.iloc[:, 9]
-
         year_start = []
         year_end = []
         bp = []
@@ -89,15 +134,31 @@ class convert:
 
         for item in column_10:
             match1 = re.match(r'"*(\d+)\s+(\w+)\s*-\s*(\d+)\s+(\w+)', item)
-            match2 = re.match(r'"*(\d+)-(\d+)\s+(\w+)', item)
+            match2 = re.match(r'"*(\d+)\s*-\s*(\d+)\s+(\w+)', item)
             if match1:
                 number1, string1, number2, string2 = match1.groups()
-                year1 = f"{number1} {string1}"
-                year2 = f"{number2} {string2}"
+                if "BCE" in string1:
+                    year1 = f"-{number1}"
+                elif "CE" in string1:
+                    year1 = f"{number1}"
+                if "BCE" in string2:
+                    year2 = f"-{number2}"
+                elif "CE" in string2:
+                    year2 = f"{number2}"
+                else:    
+                    year1 = f"{number1} {string1}"
+                    year2 = f"{number2} {string2}"
             elif match2:
                 number1, number2, string1 = match2.groups()
-                year1 = f"{number1} {string1}"
-                year2 = f"{number2} {string1}"
+                if "BCE" in string1:
+                    year1 = f"-{number1}"
+                    year2 = f"-{number2}"
+                elif "CE"in string2:
+                    year1 = f"{number1}"
+                    year2 = f"{number2}"
+                else:
+                    year1 = f"{number1} {string1}"
+                    year2 = f"{number2} {string1}"
             else:
                 year1 = item
                 year2 = item
@@ -119,11 +180,11 @@ class convert:
                         bp.append(bp_value)
                         c14.append(c14_value)
                 else:
-                    bp.append('none')
-                    c14.append('none')
+                    bp.append('')
+                    c14.append('')
             except: 
-                bp.append('none')
-                c14.append('none')
+                bp.append('')
+                c14.append('')
 
         return year_start, year_end, bp, c14
 
@@ -134,7 +195,6 @@ class convert:
         '''
 
         column_6 = df.iloc[:, 5]
-
         publications = []
         urls = []
         
@@ -166,7 +226,7 @@ class convert:
             #urls.append('TBA')
         return publications
 
-    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url):   
+    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group):   
 
         '''
         Reorganize CSV file in the AADR format into a CSV file in the AmtDB format.
@@ -177,11 +237,11 @@ class convert:
             "id_alt": '',
             "country": df.iloc[:, 13],
             "continent": continent,
-            "geo_group": df.iloc[:, 12],
+            "geo_group": geo_group,
             "culture": df.iloc[:, 11],
             "epoch": epoch,
-            "group": '',
-            "comment": '',
+            "group": POKRACOVAT TU,
+            "comment": df.iloc[:, 12],
             "latitude": df.iloc[:, 14],
             "longitude": df.iloc[:, 15],
             "sex": df.iloc[:, 22],
