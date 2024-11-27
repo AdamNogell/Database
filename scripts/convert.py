@@ -19,15 +19,15 @@ with open(reference_url_file, 'r', encoding='utf8') as reference:
             
 with open(data_url_file, 'r', encoding='utf8') as data:
     for line in data:
-            data_url.append(line.strip()) 
+            data_url.append(line.strip())
 
 if __name__ == "__main__":
     continent, geo_group = convert.continent_extract(df)
     epoch, group = convert.epoch_extract(df)
-    year_start, year_end, bp, c14 = convert.parse_years(df)
+    year_start, year_end, bp, c14, tag = convert.parse_years(df)
     publications = convert.pub_url(df)
     try:
-        convert.reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group)
+        convert.reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group, tag)
     except:
         print("Something failed")
         end_time = time.time()

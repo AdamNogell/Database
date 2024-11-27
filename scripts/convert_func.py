@@ -155,6 +155,7 @@ class convert:
         year_end = []
         bp = []
         c14 = []
+        tag = []
 
         for item in column_10:
             match1 = re.match(r'"*(\d+)\s+(\w+)\s*-\s*(\d+)\s+(\w+)', item)
@@ -209,8 +210,14 @@ class convert:
             except: 
                 bp.append('')
                 c14.append('')
-
-        return year_start, year_end, bp, c14
+        
+        for item in column_10:
+            if 'cal' in item:
+                tag.append(1)
+            else:
+                tag.append(0)
+            
+        return year_start, year_end, bp, c14, tag
 
     def pub_url(df):
 
@@ -250,7 +257,7 @@ class convert:
             #urls.append('TBA')
         return publications
 
-    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group):   
+    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group, tag):   
 
         '''
         Reorganize CSV file in the AADR format into a CSV file in the AmtDB format.
@@ -282,7 +289,7 @@ class convert:
             "reference_name": publications,
             "reference_link": reference_url,
             "data_link": data_url,
-            "c14_sample_tag": '',
+            "c14_sample_tag":tag,
             "c14_layer_tag": '',
             "full_mt_tag":'',
             "trusted_tag":'',
