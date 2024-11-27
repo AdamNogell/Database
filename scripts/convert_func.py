@@ -41,47 +41,49 @@ class convert:
                 continent.append(item)
 
         for item in column_14:
-            if 'Turkey' in item:
+            if ('Turkey' in item):
                 geo_group.append("Anatolia")
-            elif 'United Kingdom' in item or 'Channel Islands' in item or 'Isle of Man' in item or 'Ireland' in item:
+            elif ('United Kingdom' in item or 'Channel Islands' in item or 'Isle of Man' in item or 'Ireland' in item):
                 geo_group.append("British Isles")
-            elif 'Bahamas' in item or 'Belize' in item or 'Dominican Republic' in item or 'Curacao' in item or 'Haiti' in item or 'Puerto Rico' in item:
+            elif ('Bahamas' in item or 'Belize' in item or 'Dominican Republic' in item or 'Curacao' in item or 'Haiti' in item or 'Puerto Rico' in item):
                 geo_group.append("Caribbean")
-            elif 'Guam' in item or 'Micronesia' in item or 'Vanuatu' in item:
+            elif ('Guam' in item or 'Micronesia' in item or 'Vanuatu' in item):
                 geo_group.append("Oceania")
-            elif 'Spain' in item or 'Portugal' in item:
+            elif ('Spain' in item or 'Portugal' in item):
                 geo_group.append("Iberia")
-            elif 'Armenia' in item or 'Azerbaijan' in item or 'Georgia' in item:
+            elif ('Armenia' in item or 'Azerbaijan' in item or 'Georgia' in item):
                 geo_group.append("Caucasus")
-            elif 'Albania' in item or 'Bulgaria' in item or 'Bosnia' in item or 'Serbia' in item or 'Montenegro' in item or 'Kosovo' in item or 'Macedonia' in item or 'Greece' in item or 'Croatia' in item or 'Slovenia' in item or 'Romania' in item:
+            elif ('Albania' in item or 'Bulgaria' in item or 'Bosnia' in item or 'Serbia' in item or 'Montenegro' in item or 'Kosovo' in item or 'Macedonia' in item or 'Greece' in item or 'Croatia' in item or 'Slovenia' in item or 'Romania' in item):
                 geo_group.append("Balkans")
-            elif 'Estonia' in item or 'Lithuania' in item or 'Latvia' in item:
+            elif ('Estonia' in item or 'Lithuania' in item or 'Latvia' in item):
                 geo_group.append("Baltic")
-            elif 'Egypt' in item or 'Israel' in item or 'Iraq' in item or 'Jordan' in item or 'Palestine' in item or 'Syria' in item or 'Saudi Arabia' in item or 'Qatar' in item or 'Bahrain' in item or 'Kuwait' in item or 'UAE' in item or 'Emirates' in item or 'Oman' in item or 'Yemen' in item or 'Lebanon' in item:
+            elif ('Egypt' in item or 'Israel' in item or 'Iraq' in item or 'Jordan' in item or 'Palestine' in item or 'Syria' in item or 'Saudi Arabia' in item or 'Qatar' in item or 'Bahrain' in item or 'Kuwait' in item or 'UAE' in item or 'Emirates' in item or 'Oman' in item or 'Yemen' in item or 'Lebanon' in item):
                 geo_group.append("Near East")
-            elif 'Iran' in item or 'Afghanistan' in item or 'Pakistan' in item:
+            elif ('Iran' in item or 'Afghanistan' in item or 'Pakistan' in item):
                 geo_group.append("Middle East")
-            elif 'Norway' in item or 'Sweden' in item or 'Denmark' in item or 'Finland' in item or 'Iceland' in item:
+            elif ('Norway' in item or 'Sweden' in item or 'Denmark' in item or 'Finland' in item or 'Iceland' in item):
                 geo_group.append("Scandinavia")
-            elif 'Moldova' in item or 'Ukraine' in item:
+            elif ('Moldova' in item or 'Ukraine' in item):
                 geo_group.append("Pontic steppe")
-            elif 'Austria' in item or 'Czech' in item or 'Slovak' in item or 'Germany' in item or 'Switzerland' in item or 'Hungary' in item or 'Poland' in item or 'Liechtenstein' in item:
+            elif ('Austria' in item or 'Czech' in item or 'Slovak' in item or 'Germany' in item or 'Switzerland' in item or 'Hungary' in item or 'Poland' in item or 'Liechtenstein' in item):
                 geo_group.append("central Europe")
-            elif 'France' in item or 'Netherlands' in item or 'Belgium' in item or 'Luxembourg' in item:
+            elif ('France' in item or 'Netherlands' in item or 'Belgium' in item or 'Luxembourg' in item):
                 geo_group.append("western Europe")
-            elif 'Italy' in item:
+            elif ('Italy' in item):
                 geo_group.append("southern Europe")
-            elif 'Sudan' in item or 'Ethiopia' in item or 'Kenya' in item or 'Malawi' in item or 'Zambia' in item or 'Tanzania' in item:
+            elif ('Sudan' in item or 'Ethiopia' in item or 'Kenya' in item or 'Malawi' in item or 'Zambia' in item or 'Tanzania' in item):
                 geo_group.append("eastern Africa")
-            elif 'Japan' in item or 'China' in item or 'Taiwan' in item or 'Mongolia' in item or 'Myanmar' in item or 'Thailand' in item or 'Vietnam' in item:
+            elif ('Japan' in item or 'China' in item or 'Taiwan' in item or 'Mongolia' in item or 'Myanmar' in item or 'Thailand' in item or 'Vietnam' in item):
                 geo_group.append("east Asia")
-            elif 'Uzbekistan' in item or 'Tajikistan' in item or 'Turkmenistan' in item or 'Kyrgyzstan' in item or 'Kazakhstan' in item:
+            elif ('Uzbekistan' in item or 'Tajikistan' in item or 'Turkmenistan' in item or 'Kyrgyzstan' in item or 'Kazakhstan' in item):
                 geo_group.append("central Asia")
-            elif 'Bolivia' in item or 'Mexico' in item or 'Brazil' in item or 'Peru' in item or 'Chile' in item or 'Uruguay' in item or 'Paraguay' in item or 'Suriname' in item or 'Guyana' in item or 'Venezuela' in item or 'Ecuador' in item or 'Colombia' in item or 'Honduras' in item or 'Nicaragua' in item or 'El Salvador' in item or 'Guatemala' in item:
+            elif ('Chile' in item or 'Argentina' in item):
+                geo_group.append("Patagonia")
+            elif ('Bolivia' in item or 'Mexico' in item or 'Brazil' in item or 'Peru' in item or 'Uruguay' in item or 'Paraguay' in item or 'Suriname' in item or 'Guyana' in item or 'Venezuela' in item or 'Ecuador' in item or 'Colombia' in item or 'Honduras' in item or 'Nicaragua' in item or 'El Salvador' in item or 'Guatemala' in item):
                 geo_group.append("Latin America")
-            elif 'Cameroon' in item:
+            elif ('Cameroon' in item):
                 geo_group.append("central Africa")
-            elif 'South Africa' in item:
+            elif ('South Africa' in item):
                 geo_group.append("south Africa")
             else:
                 geo_group.append(item)
@@ -96,6 +98,7 @@ class convert:
 
         column_12 = df.iloc[:, 11]
         epoch = []
+        group = []
 
         for item in column_12:
             if (item.endswith('_HG') or '_HG_' in item or 'LSA' in item):
@@ -108,17 +111,38 @@ class convert:
                 epoch.append("Copper Age")
             elif (item.endswith('_H') or '_H_' in item or 'MLBA' in item or 'MBA' in item or 'EBA' in item or 'LBA' in item or 'IBA' in item or 'BA' in item or 'BellBeaker' in item):
                 epoch.append("Bronze Age")
-            elif ('MLIA' in item or 'MIA' in item or 'EIA' in item or 'LIA' in item or 'IIA' in item or 'IA' in item or 'Roopkund' in item):
+            elif ('MLIA' in item or 'MIA' in item or 'EIA' in item or 'LIA' in item or 'IIA' in item or 'IA' in item or 'Roopkund' in item or 'Antiquity' in item or 'EarlyChristian' in item or 'Archaic' in item):
                 epoch.append("Iron Age")
-            elif ('Antiquity' in item or 'EarlyChristian' in item or 'Archaic' in item or 'Inca' in item):
-                epoch.append("Classical Age")
             elif ('Avar' in item or 'SMA' in item or 'Medieval' in item or 'Byzantine' in item or 'Latte' in item):
                 epoch.append("Middle Age")
             elif ('Modern' in item):
                 epoch.append("Modern Era")
             else:
                 epoch.append('')
-        return epoch
+                
+        for item in column_12:
+            if (item.endswith('_HG') or '_HG_' in item or 'LSA' in item):
+                group.append("PAXX")
+            elif ('Mesolithic' in item or 'Natufian' in item):
+                group.append("MEXX")
+            elif (item.endswith('_N') or '_N_' in item or '_N.' in item or '_EN' in item or '_MN' in item or '_PN' in item or 'Ceramic' in item or 'LIP' in item or 'MH' in item or 'EIP' in item or 'Yamana' in item):
+                group.append("NEXX")
+            elif (item.endswith('_LN') or '_LN' in item or '_LN.' in item):
+                group.append("LNEXX")
+            elif (item.endswith('_C') or '_C_' in item):
+                group.append("CAXX")
+            elif (item.endswith('_H') or '_H_' in item or 'MLBA' in item or 'MBA' in item or 'EBA' in item or 'LBA' in item or 'IBA' in item or 'BA' in item or 'BellBeaker' in item):
+                group.append("BAXX")
+            elif ('EBA' in item):
+                group.append("EBAXX")
+            elif ('MLIA' in item or 'MIA' in item or 'EIA' in item or 'LIA' in item or 'IIA' in item or 'IA' in item or 'Roopkund' in item or 'Antiquity' in item or 'EarlyChristian' in item or 'Archaic' in item):
+                group.append("IAXX")
+            elif ('Avar' in item or 'SMA' in item or 'Medieval' in item or 'Byzantine' in item or 'Latte' in item):
+                group.append("MAXX")
+            else:
+                group.append('')
+        
+        return epoch, group
 
     def parse_years(df):
 
@@ -153,7 +177,7 @@ class convert:
                 if "BCE" in string1:
                     year1 = f"-{number1}"
                     year2 = f"-{number2}"
-                elif "CE"in string2:
+                elif "CE"in string1:
                     year1 = f"{number1}"
                     year2 = f"{number2}"
                 else:
@@ -226,7 +250,7 @@ class convert:
             #urls.append('TBA')
         return publications
 
-    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group):   
+    def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group):   
 
         '''
         Reorganize CSV file in the AADR format into a CSV file in the AmtDB format.
@@ -240,7 +264,7 @@ class convert:
             "geo_group": geo_group,
             "culture": df.iloc[:, 11],
             "epoch": epoch,
-            "group": POKRACOVAT TU,
+            "group": group,
             "comment": df.iloc[:, 12],
             "latitude": df.iloc[:, 14],
             "longitude": df.iloc[:, 15],

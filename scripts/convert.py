@@ -5,31 +5,29 @@ import time
 import pandas as pd
 
 start_time = time.time()
-input_file = '/home/adam/Desktop/PhD/Database/AADR_data/metadata_for_sequences_not_present_in_AmtDB_geneticID.csv'
+input_file = '/home/adam/Desktop/PhD/Database/input_data/AADR_data/metadata_for_sequences_not_present_in_AmtDB_geneticID.csv'
 df = pd.read_csv(input_file)
-reference_url_file = '/home/adam/Desktop/PhD/Database/reference_url.csv'
-data_url_file = '/home/adam/Desktop/PhD/Database/data_url.csv'
+reference_url_file = '/home/adam/Desktop/PhD/Database/input_data/reference_url.csv'
+data_url_file = '/home/adam/Desktop/PhD/Database/input_data/data_url.csv'
 reference_url = []
 data_url = []
 output_file = '/home/adam/Desktop/PhD/Database/output/converted_metadata.csv'
 
 with open(reference_url_file, 'r', encoding='utf8') as reference:
     for line in reference:
-        if line != 'reference_link':
-            reference_url.append(line)
+            reference_url.append(line.strip())
             
 with open(data_url_file, 'r', encoding='utf8') as data:
     for line in data:
-        if line != 'data_link':
-            data_url.append(line) 
+            data_url.append(line.strip()) 
 
 if __name__ == "__main__":
-    continent = convert.continent_extract(df)
-    epoch = convert.epoch_extract(df)
+    continent, geo_group = convert.continent_extract(df)
+    epoch, group = convert.epoch_extract(df)
     year_start, year_end, bp, c14 = convert.parse_years(df)
     publications = convert.pub_url(df)
     try:
-        convert.reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url)
+        convert.reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group)
     except:
         print("Something failed")
         end_time = time.time()

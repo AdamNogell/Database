@@ -16,16 +16,17 @@
 
 # geo_group
 > new geo_groups:
-  Caribbean, Oceania, east Asia, central Asia, Latin America, central Africa, south Africa
+  Caribbean, Oceania, east Asia, central Asia, Patagonia, Latin America, central Africa, south Africa
 > countries with no geo_group:
   Canada
   India
   Russia
   USA
 > Questions:
-  1) How to distinguish between paleolithic periods?
-  2) Why is there no Middle Ages or Classical Ages?
-  3) How to know if I should use location or country in 'group'
+  1) How to distinguish between paleolithic periods in epoch?
+  2) Why aren't there Paleolithic in group?
+  3) Why aren't there Middle Ages in epoch?
+  4) How to know if I should use location or country in 'group'
 
 csvcut -c 12 AADR_data/metadata_for_sequences_not_present_in_AmtDB_geneticID.csv | head
 
@@ -52,5 +53,3 @@ El Soco
 "England, Wiltshire, Amesbury Down"
 "England, Hampshire, Winnall Down"
 "England, Gloucestershire, Cheltenham, Hazleton North"
-
->Continue line 243 - copy epoch extract and make a new one but with Early/Late etc. 
