@@ -1,8 +1,7 @@
 #!/home/adam/Desktop/PhD/Database/venv/bin/python
 
 import pandas as pd
-import re, requests, urllib.parse
-from bs4 import BeautifulSoup
+import re
 
 class convert:
     def continent_extract(df):
@@ -12,8 +11,7 @@ class convert:
         '''
 
         column_14 = df.iloc[:, 13]
-        continent = []
-        geo_group = []
+        continent, geo_group = [], []
         
         input_dict = {
         "Africa": ["Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cabo Verde","Cameroon", "CAR", "Central African Republic", "Chad", "Comoros", "Congo", "Democratic Republic of the Congo", "Djibouti", "DRC", "Egypt", "Equatorial Guinea", "Eritrea", "Eswatini", "Ethiopia", "Gabon", "Gambia", "Ghana", "Guinea", "Guinea-Bissau", "Ivory Coast", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", "Republic of the Congo", "Rwanda", "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", "Somalia", "South Africa", "South Sudan", "Sudan", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe"],
@@ -97,8 +95,7 @@ class convert:
         '''
 
         column_12 = df.iloc[:, 11]
-        epoch = []
-        group = []
+        epoch, group = [], []
 
         for item in column_12:
             if (item.endswith('_HG') or '_HG_' in item or 'LSA' in item):
@@ -151,11 +148,7 @@ class convert:
         '''
 
         column_10 = df.iloc[:, 9]
-        year_start = []
-        year_end = []
-        bp = []
-        c14 = []
-        tag = []
+        year_start, year_end, bp, c14, tag = [], [], [], [], []
 
         for item in column_10:
             match1 = re.match(r'"*(\d+)\s+(\w+)\s*-\s*(\d+)\s+(\w+)', item)
@@ -227,34 +220,13 @@ class convert:
 
         column_6 = df.iloc[:, 5]
         publications = []
-        urls = []
         
         for item in column_6:
             spaced_pub = re.sub(r'([A-Z])', r' \1', item).strip().replace('2', ' 2', 1)
             short_pub, year_pub = spaced_pub.split(' ', 1)[0], spaced_pub.split(' ')[-1]
             pub = f"{short_pub} et al. {year_pub}" 
             publications.append(pub)
-            #query = urllib.parse.quote_plus(spaced_pub)
-            #url = f"https://scholar.google.com/scholar?q={query}"
-            #headers = {
-            #    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36"
-            #}
-            #response = requests.get(url, headers=headers)
-            #if response.status_code == 200:
-            #    soup = BeautifulSoup(response.text, 'html.parser')
-            #    first_result = soup.find('h3', class_='gs_rt')
-            #    if first_result:
-            #        link = first_result.find('a')
-            #        if link and 'href' in link.attrs:
-            #            paper_url = link['href']
-            #            urls.append(paper_url)
-            #        else:
-            #            urls.append('none')
-            #    else:
-            #        urls.append('none')
-            #else:
-            #    urls.append('none')
-            #urls.append('TBA')
+            
         return publications
 
     def reorganize_csv(df, output_file, continent, epoch, year_start, year_end, bp, c14, publications, reference_url, data_url, geo_group, group, tag):   
@@ -272,12 +244,12 @@ class convert:
             "culture": df.iloc[:, 11],
             "epoch": epoch,
             "group": group,
-            "comment": df.iloc[:, 12],
+            "comment": '',
             "latitude": df.iloc[:, 14],
             "longitude": df.iloc[:, 15],
             "sex": df.iloc[:, 22],
             "site": df.iloc[:, 11],
-            "site_detail": '',
+            "site_detail": df.iloc[:, 12],
             "mt_hg": df.iloc[:, 27],
             "ychr_hg": df.iloc[:, 25],
             "ychr_snps":'',

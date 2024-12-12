@@ -5,13 +5,15 @@ import time
 import pandas as pd
 
 start_time = time.time()
+
 input_file = '/home/adam/Desktop/PhD/Database/input_data/AADR_data/metadata_for_sequences_not_present_in_AmtDB_geneticID.csv'
-df = pd.read_csv(input_file)
+output_file = '/home/adam/Desktop/PhD/Database/output/converted_metadata.csv'
 reference_url_file = '/home/adam/Desktop/PhD/Database/input_data/reference_url.csv'
 data_url_file = '/home/adam/Desktop/PhD/Database/input_data/data_url.csv'
-reference_url = []
-data_url = []
-output_file = '/home/adam/Desktop/PhD/Database/output/converted_metadata.csv'
+
+
+df = pd.read_csv(input_file)
+reference_url, data_url = [], []
 
 with open(reference_url_file, 'r', encoding='utf8') as reference:
     for line in reference:
