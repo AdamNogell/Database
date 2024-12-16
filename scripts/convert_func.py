@@ -236,7 +236,7 @@ class convert:
         '''
 
         reorganized_df = pd.DataFrame({
-            "id": df.iloc[:, 1],
+            "id": df.iloc[:, 0],
             "id_alt": '',
             "country": df.iloc[:, 13],
             "continent": continent,
