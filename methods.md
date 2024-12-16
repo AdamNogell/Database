@@ -12,7 +12,7 @@
   7: epoch - TBC
   8: group - TBC
   9: comment - DONE
-  13: site - NOT(?)
+  13: site - NOT(?)_
 
 # geo_group
 > new geo_groups:
