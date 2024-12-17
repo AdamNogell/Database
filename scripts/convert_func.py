@@ -222,6 +222,7 @@ class convert:
         publications = []
         
         for item in column_6:
+            item = item.split(' ', 1)[0]
             spaced_pub = re.sub(r'([A-Z])', r' \1', item).strip().replace('2', ' 2', 1)
             short_pub, year_pub = spaced_pub.split(' ', 1)[0], spaced_pub.split(' ')[-1]
             pub = f"{short_pub} et al. {year_pub}" 
