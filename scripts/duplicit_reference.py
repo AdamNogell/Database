@@ -9,7 +9,7 @@ output_file = '/home/adam/Desktop/PhD/Database/output/modified_metadata.csv'
 
 # Function to determine if the string is type A or B
 def determine_type(string):
-    if 'NakatsukaCell2020' in string:
+    if ('NakatsukaCell2020' in string or 'LipsonCurrentBiology2020' in string or 'LipsonCurrentBiology2018' in string or 'FernandesNatureEcologyEvolution2020' in string):
         return 'A'
     else:
         return 'B'
